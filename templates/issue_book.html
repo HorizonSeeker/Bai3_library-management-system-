@@ -1,0 +1,111 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static',filename='js/issue_books.js') }}"></script>
+<body>
+  <div class="container-fluid" id="main">
+	{% include 'top_menus.html' %}  	
+    <div class="row row-offcanvas row-offcanvas-left">   
+	  {% include 'left_menus.html' %}	
+      <div class="col-md-9 col-lg-10 main col-md-2"> 
+		<h3>Sách Đã Phát Hành</h3>
+			<br>
+			<div class="float-right mb-2 col-md-2">
+				<button type="button" id="issueBook" class="btn btn-info" title="Thêm sách"><span class="glyphicon glyphicon-plus">Thêm Sách</span></button>
+			</div>
+			<br><br>	
+			<table class="table table-striped">
+			<thead>
+			  <tr>
+				<th>Id</th>				
+				<th>Sách</th>
+				<th>ISBN</th>
+				<th>Người Dùng</th>	
+				<th>Ngày Phát Hành</th>	
+				<th>Ngày Trả Dự Kiến</th>	
+				<th>Ngày Trả</th>											 
+				<th>Trạng Thái</th>													 
+				<th></th>
+				<th></th>		
+			  </tr>
+			</thead>
+			<tbody>
+			  {% for issue_book in issue_books %}			  
+				  <tr>					
+					<td>{{issue_book.issuebookid}}</td>
+					<td>{{issue_book.book_name}}</td>
+					<td>{{issue_book.first_name}}</td>
+					<td>{{issue_book.issue_date_time}}</td>
+					<td>{{issue_book.expected_return_date}}</td>
+					<td>{{issue_book.return_date_time}}</td>
+					<td>{{issue_book.status}}</td>								 
+					<td><a href="{{url_for('edit_issue_book', issuebookid=issue_book.issuebookid)}}" class="btn btn-primary">Chỉnh Sửa</a></td>	
+					<td><a href="{{url_for('delete_issue_book', issuebookid=issue_book.issuebookid)}}" class="btn btn-danger">Xóa</a></td>
+				  </tr> 
+			{% endfor %}	  
+			</tbody>
+		  </table>	         
+        <hr>         
+       </div>       
+      </div>     
+    </div>
+
+	<div id="issuedBookModal" class="modal fade">
+		<div class="modal-dialog">
+			<form method="post" id="issuedBookForm" action="{{ url_for('save_issue_book')}}">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"></button>
+						<h4 class="modal-title"><i class="fa fa-plus"></i> Chỉnh Sửa Sách Đã Phát Hành</h4>
+					</div>
+					<div class="modal-body">								
+						<div class="form-group">							
+							<label for="rack" class="control-label">Sách Có Sẵn</label>
+							<select name="book" id="book" class="form-control">
+								<option value="">Chọn</option>
+								{% for book in books %}
+									<option value="{{book.bookid}}">{{book.name}}</option>
+								{% endfor %}										
+							</select>
+						</div>	
+						
+						<div class="form-group">							
+							<label for="rack" class="control-label">Người Dùng</label>
+							<select name="users" id="users" class="form-control">
+								<option value="">Chọn</option>
+								{% for user in users %}
+									<option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+								{% endfor %}								
+							</select>
+						</div>	
+						
+						<div class="form-group">							
+							<label for="expected date" class="control-label">Ngày Trả Dự Kiến</label>
+							<input type="datetime-local" step="1" name="expected_return_date" id="expected_return_date" autocomplete="off" class="form-control"/>								
+						</div>
+						
+						<div class="form-group">							
+							<label for="expected date" class="control-label">Ngày Trả</label>
+							<input type="datetime-local" step="1" name="return_date" id="return_date" autocomplete="off" class="form-control"/>								
+						</div>
+						
+						<div class="form-group">
+							<label for="status" class="control-label">Trạng Thái</label>			
+							<select class="form-control" id="status" name="status"/>
+								<option value="">Chọn</option>							
+								<option value="Issued">Đã Phát</option>
+								<option value="Returned">Đã Trả</option>
+								<option value="Not Return">Chưa Trả</option>										
+							</select>							
+						</div>				
+					</div>
+					<div class="modal-footer">
+						<input type="hidden" name="issuebookid" id="issuebookid" />					
+						<input type="hidden" name="action" id="action" value="addIssueBook" />
+						<input type="submit" name="save" id="save" class="btn btn-info" value="Lưu" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>	
+  </body>
+</html>

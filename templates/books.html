@@ -1,0 +1,152 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static',filename='js/books.js') }}"></script>
+<body>
+  <div class="container-fluid" id="main">
+	{% include 'top_menus.html' %}  	
+    <div class="row row-offcanvas row-offcanvas-left">   
+	  {% include 'left_menus.html' %}	
+      <div class="col-md-9 col-lg-10 main"> 
+		<h3>Danh sách Sách</h3>
+			<br>
+			<div class="float-right mb-2 col-md-2">
+				<button type="button" id="addBook" class="btn btn-info" title="Thêm sách"><span class="glyphicon glyphicon-plus">Thêm sách</span></button>
+			</div>
+			<br><br>			
+			<table class="table table-striped">
+			<thead>
+			  <tr>
+				<th></th>
+				<th>Sách</th>
+				<th>ISBN</th>
+				<th>Tác giả</th>	
+				<th>NXB</th>	
+				<th>Thể loại</th>	
+				<th>Kệ</th>
+				<th>Số lượng</th>						
+				<th>Trạng thái</th>	
+				<th>Cập nhật vào</th>				
+				<th></th>
+				<th></th>
+			  </tr>
+			</thead>
+			<tbody>
+			  {% for book in books %}			  
+				  <tr>
+					<td>
+					{% if book.picture %}
+						<img src="../static/images/{{book.picture}}" width="80" height="90">
+					{% else %}
+						<img src="../static/images/default.jpg" width="80" height="90">
+					{% endif %}					
+					</td>
+					<td>{{book.name}}</td>
+					<td>{{book.isbn}}</td>
+					<td>{{book.author_name}}</td>
+					<td>{{book.publisher_name}}</td>
+					<td>{{book.category_name}}</td>
+					<td>{{book.rack_name}}</td>
+					<td>{{book.no_of_copy}}</td>
+					<td>{{book.status}}</td>
+					<td>{{book.updated_on}}</td>				
+					<td><a href="{{url_for('edit_book', bookid=book.bookid)}}" class="btn btn-primary">Chỉnh sửa</a></td>	
+					<td><a href="{{url_for('delete_book', bookid=book.bookid)}}" class="btn btn-danger">Xóa</a></td>
+				  </tr> 
+			{% endfor %}	  
+			</tbody>
+		  </table>	        
+        <hr>         
+       </div>       
+      </div>     
+    </div>
+
+	<div id="bookModal" class="modal fade">
+		<div class="modal-dialog">
+			<form method="post" id="bookForm" action="{{ url_for('save_book')}}">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"></button>
+						<h4 class="modal-title"><i class="fa fa-plus"></i> Chỉnh sửa sách</h4>
+					</div>
+					<div class="modal-body">						
+						
+						<div class="form-group">							
+							<label for="book" class="control-label">Sách</label>							
+							<input type="text" name="name" id="name" autocomplete="off" class="form-control" placeholder="tên sách"/>
+											 
+						</div>
+						
+						<div class="form-group">							
+							<label for="book" class="control-label">Số ISBN</label>							
+							<input type="text" name="isbn" id="isbn" autocomplete="off" class="form-control" placeholder="số isbn"/>
+											 
+						</div>
+						
+						<div class="form-group">							
+							<label for="book" class="control-label">Số lượng</label>			
+							<input type="number" name="no_of_copy" id="no_of_copy" autocomplete="off" class="form-control" placeholder="Số lượng"/>
+						</div>
+						
+						<div class="form-group">							
+							<label for="author" class="control-label">Tác giả</label>
+							<select name="author" id="author" class="form-control">
+								<option value="">Chọn</option>
+								{% for author in authors %}
+									<option value="{{author.authorid}}">{{author.name}}</option>
+								{% endfor %}	  							
+							</select>
+						</div>
+						
+						
+						<div class="form-group">							
+							<label for="publisher" class="control-label">Nhà xuất bản</label>
+							<select name="publisher" id="publisher" class="form-control">
+								<option value="">Chọn</option>
+								{% for publisher in publishers %}
+									<option value="{{publisher.publisherid}}">{{publisher.name}}</option>
+								{% endfor %}								
+							</select>
+						</div>
+
+						<div class="form-group">							
+							<label for="category" class="control-label">Thể loại</label>
+							<select name="category" id="category" class="form-control">
+								<option value="">Chọn</option>
+								{% for category in categories %}
+									<option value="{{category.categoryid}}">{{category.name}}</option>
+								{% endfor %}								
+							</select>
+						</div>								
+		
+						<div class="form-group">							
+							<label for="rack" class="control-label">Kệ</label>
+							<select name="rack" id="rack" class="form-control">
+								<option value="">Chọn</option>
+								{% for rack in racks %}
+									<option value="{{rack.categoryid}}">{{rack.name}}</option>
+								{% endfor %}								
+							</select>
+						</div>	
+						
+						
+						<div class="form-group">
+							<label for="status" class="control-label">Trạng thái</label>							
+							<select class="form-control" id="status" name="status"/>
+								<option value="">Chọn</option>							
+								<option value="Enable">Kích hoạt</option>
+								<option value="Disable">Vô hiệu hóa</option>								
+							</select>							
+						</div>				
+						
+					</div>
+					<div class="modal-footer">
+						<input type="hidden" name="bookid" id="bookid" />					
+						<input type="hidden" name="action" id="action" value="" />
+						<input type="submit" name="save" id="save" class="btn btn-info" value="Lưu" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>	
+  </body>
+</html>

@@ -1,0 +1,78 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static',filename='js/category.js') }}"></script>
+<body>
+  <div class="container-fluid" id="main">
+	{% include 'top_menus.html' %}  	
+    <div class="row row-offcanvas row-offcanvas-left">   
+	  {% include 'left_menus.html' %}	
+      <div class="col-md-9 col-lg-10 main"> 
+		<br>
+		<h3>Danh Sách Danh Mục</h3>
+			<br>
+			<div class="float-right mb-2 col-md-2">
+				<button type="button" id="addCategory" class="btn btn-info" title="Thêm danh mục"><span class="glyphicon glyphicon-plus">Thêm</span></button>
+			</div>
+			<table class="table table-striped">
+			<thead>
+			  <tr>
+				<th>STT</th>					
+				<th>Tên</th>					
+				<th>Trạng Thái</th>											
+				<th></th>
+				<th></th>	
+			  </tr>
+			</thead>
+			<tbody>
+			  {% for category in categories %}			  
+				  <tr>					
+					<td>{{category.categoryid}}</td>
+					<td>{{category.name}}</td>
+					<td>{{category.status}}</td>							
+					<td><a href="{{url_for('editCategory', categoryid=category.categoryid)}}" class="btn btn-primary">Chỉnh Sửa</a></td>	
+					<td><a href="{{url_for('delete_category', categoryid=category.categoryid)}}" class="btn btn-danger">Xóa</a></td>
+				  </tr> 
+			{% endfor %}	  
+			</tbody>
+		  </table>			  
+        <hr>  		
+       </div>       
+      </div>     
+    </div>
+	<div id="categoryModal" class="modal fade">
+		<div class="modal-dialog">
+			<form method="post" id="categoryForm" action="{{ url_for('saveCategory')}}">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"></button>
+						<h4 class="modal-title"><i class="fa fa-plus"></i> Thêm Danh Mục</h4>
+					</div>
+					<div class="modal-body">						
+						
+						<div class="form-group">							
+							<label for="category" class="control-label">Tên Danh Mục</label>							
+							<input type="text" name="name" id="name" autocomplete="off" class="form-control" placeholder="tên danh mục"/>
+											
+						</div>
+						
+						<div class="form-group">
+							<label for="status" class="control-label">Trạng Thái</label>							
+							<select class="form-control" id="status" name="status"/>
+								<option value="">Chọn</option>							
+								<option value="Enable">Kích Hoạt</option>
+								<option value="Disable">Vô Hiệu Hóa</option>								
+							</select>							
+						</div>				
+						
+					</div>
+					<div class="modal-footer">
+						<input type="hidden" name="categoryid" id="categoryid" />					
+						<input type="hidden" name="action" id="action" value="" />
+						<input type="submit" name="save" id="save" class="btn btn-info" value="Lưu" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>	
+  </body>
+</html>

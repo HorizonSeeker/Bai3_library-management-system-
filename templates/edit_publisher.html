@@ -1,0 +1,51 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static',filename='js/publisher.js') }}"></script>
+<body>
+  <div class="container-fluid" id="main">
+	{% include 'top_menus.html' %}  	
+    <div class="row row-offcanvas row-offcanvas-left">   
+	  {% include 'left_menus.html' %}	
+      <div class="col-md-9 col-lg-10 main"> 
+		<h3>Chỉnh sửa Nhà xuất bản</h3>
+		<br>
+        {% for publisher in publishers %}
+        <form method="post" id="categoryForm" action="{{ url_for('savePublisher')}}">
+            <div class="modal-content">                
+                <div class="modal-body">						
+                    
+                    <div class="form-group">							
+                        <label for="category" class="control-label">Tên Nhà xuất bản</label>							
+                        <input type="text" name="name" id="name" autocomplete="off" class="form-control" placeholder="tên nhà xuất bản" value="{{publisher.name}}"/>
+                                        
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="status" class="control-label">Trạng thái</label>							
+                        <select class="form-control" id="status" name="status"/>
+                            <option value="">Chọn</option>							
+                            <option value="Enable" {% if publisher.status == 'Enable' %}selected="selected" {% endif %}>Kích hoạt</option>
+                            <option value="Disable"  {% if publisher.status == 'Disable' %}selected="selected" {% endif %}>Vô hiệu hóa</option>								
+                        </select>							
+                    </div>				
+                    
+                                    
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="publisherid" id="publisherid" value="{{publisher.publisherid}}" />					
+                    <input type="hidden" name="action" id="action" value="updatePublisher" />
+                    <input type="submit" name="save" id="save" class="btn btn-info" value="Lưu" />                    
+                </div>
+            </div>
+        </form>        
+        {% endfor %}	
+    </div>
+			      
+        <hr>         
+       </div>       
+      </div>     
+    </div>
+
+	
+	</div>	
+  </body>
+</html>

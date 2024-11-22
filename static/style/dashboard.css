@@ -1,0 +1,113 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #f4f6f9;
+    color: #333;
+}
+
+/* Navbar Styles */
+.navbar {
+    background: #2c3e50 !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    color: #fff !important;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.nav-link {
+    color: #fff !important;
+    font-weight: 400;
+}
+
+/* Sidebar Styles */
+.sidebar-offcanvas {
+    background: #fff;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    padding: 1.5rem 0;
+}
+
+.leftMenus a {
+    color: #2c3e50;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s;
+}
+
+.leftMenus a:hover {
+    background: #f8f9fa;
+    color: #3498db;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-block {
+    padding: 1.5rem;
+}
+
+/* Table Styles */
+.table {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.table thead th {
+    background: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+/* Button Styles */
+.btn {
+    border-radius: 5px;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s;
+}
+
+.btn-info {
+    background: #3498db;
+    border: none;
+}
+
+.btn-info:hover {
+    background: #2980b9;
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+    background: #f8f9fa;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Form Styles */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52,152,219,0.25);
+}
